@@ -1,0 +1,35 @@
+{
+  "name": "fourpoints-realty",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@fontsource/poppins": "^5.3.0",
+    "@react-three/drei": "latest",
+    "@react-three/fiber": "latest",
+    "framer-motion": "latest",
+    "gsap": "latest",
+    "lenis": "latest",
+    "lottie-react": "latest",
+    "next": "latest",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "three": "latest"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "latest",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@types/three": "latest",
+    "autoprefixer": "latest",
+    "postcss": "latest",
+    "tailwindcss": "latest",
+    "typescript": "latest"
+  }
+}
