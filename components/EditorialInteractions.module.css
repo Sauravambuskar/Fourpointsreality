@@ -1,87 +1,3 @@
-.marketSection {
-  overflow: hidden;
-  padding: 38px 0 50px;
-  color: var(--ink);
-  border-top: 1px solid rgba(29, 29, 25, 0.24);
-  border-bottom: 1px solid rgba(29, 29, 25, 0.24);
-  background: var(--champagne);
-}
-
-.marketHeader {
-  width: min(92%, 1440px);
-  margin: 0 auto 28px;
-  display: flex;
-  justify-content: space-between;
-  gap: 28px;
-  align-items: center;
-}
-
-.marketHeader strong {
-  font-size: clamp(1.35rem, 2vw, 2rem);
-  font-weight: 800;
-}
-
-.marketHeader p {
-  max-width: 510px;
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 650;
-  line-height: 1.55;
-}
-
-.marqueeWindow {
-  width: 106%;
-  margin-left: -3%;
-  overflow: hidden;
-  border-top: 2px solid var(--ink);
-  border-bottom: 2px solid var(--ink);
-  background: var(--cream);
-  transform: rotate(-0.8deg);
-}
-
-.marquee {
-  width: max-content;
-  min-width: 100%;
-  padding: 16px 0;
-  transition: color 0.35s ease, background 0.35s ease;
-  touch-action: pan-y;
-}
-
-.marquee:hover {
-  color: var(--white);
-  background: var(--dark);
-}
-
-.marqueeGroup {
-  display: flex;
-  align-items: center;
-}
-
-.marketSignal {
-  width: clamp(310px, 31vw, 470px);
-  min-height: 104px;
-  padding: 14px 34px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border-right: 1px solid currentColor;
-}
-
-.marketSignal strong {
-  font-size: clamp(1.75rem, 2.5vw, 2.8rem);
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.045em;
-  text-transform: uppercase;
-}
-
-.marketSignal span {
-  margin-top: 10px;
-  font-size: 1rem;
-  font-weight: 650;
-  opacity: 0.72;
-}
-
 .stackSection {
   padding: clamp(110px, 12vw, 175px) 4vw 0;
   background: var(--cream-2);
@@ -101,7 +17,7 @@
 .splitHeading h2 {
   margin: 0;
   font-size: clamp(3.8rem, 7vw, 8rem);
-  font-weight: 800;
+  font-weight: var(--weight-display);
   line-height: 0.9;
   letter-spacing: -0.065em;
   text-transform: uppercase;
@@ -119,7 +35,7 @@
 .splitHeading p {
   margin: 0;
   font-size: 1.08rem;
-  font-weight: 600;
+  font-weight: var(--weight-copy);
   line-height: 1.72;
   color: var(--muted);
 }
@@ -162,7 +78,7 @@
   max-width: 620px;
   margin: 0;
   font-size: clamp(2.65rem, 5vw, 6.4rem);
-  font-weight: 800;
+  font-weight: var(--weight-heading);
   line-height: 0.94;
   letter-spacing: -0.055em;
   text-transform: uppercase;
@@ -172,7 +88,7 @@
   max-width: 560px;
   margin: 34px 0 0;
   font-size: 1.05rem;
-  font-weight: 600;
+  font-weight: var(--weight-copy);
   line-height: 1.72;
   opacity: 0.78;
 }
@@ -183,7 +99,7 @@
   padding-bottom: 6px;
   border-bottom: 2px solid currentColor;
   font-size: 1rem;
-  font-weight: 800;
+  font-weight: var(--weight-label);
 }
 
 .stackCopy a span {
@@ -253,7 +169,7 @@
   max-width: 1020px;
   margin: 0;
   font-size: clamp(3.25rem, 6.3vw, 7.2rem);
-  font-weight: 800;
+  font-weight: var(--weight-display);
   line-height: 0.92;
   letter-spacing: -0.06em;
   text-transform: uppercase;
@@ -262,7 +178,7 @@
 .choreographyCaption p {
   margin: 0;
   font-size: 1.06rem;
-  font-weight: 600;
+  font-weight: var(--weight-copy);
   line-height: 1.7;
   color: rgba(255, 255, 255, 0.82);
 }
@@ -316,24 +232,6 @@
 }
 
 @media (max-width: 767px) {
-  .marketSection {
-    padding: 30px 0 40px;
-  }
-
-  .marketHeader {
-    width: calc(100% - 36px);
-    display: block;
-  }
-
-  .marketHeader p {
-    margin-top: 10px;
-  }
-
-  .marketSignal {
-    width: 290px;
-    padding: 14px 24px;
-  }
-
   .stackSection {
     padding: 90px 18px 0;
   }
@@ -433,13 +331,13 @@
   .splitMobileCards h3 {
     margin: 0;
     font-size: 2rem;
-    font-weight: 800;
+    font-weight: var(--weight-heading);
   }
 
   .splitMobileCards p {
     margin: 18px 0 0;
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: var(--weight-copy);
     line-height: 1.65;
     opacity: 0.8;
   }

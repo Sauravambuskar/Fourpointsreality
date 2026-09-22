@@ -8,7 +8,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import { FormEvent, MouseEvent as ReactMouseEvent, useEffect, useRef, useState } from "react";
 import VariableFontHoverByLetter from "./fancy/text/variable-font-hover-by-letter";
-import { AdvisoryStack, ArchitectureChoreography, DecisionSplit, MarketMarquee } from "./EditorialInteractions";
+import { AdvisoryStack, ArchitectureChoreography, DecisionSplit } from "./EditorialInteractions";
 import { areas, journal, properties, testimonials } from "./siteData";
 import ProjectsCylinder from "./ProjectsCylinder";
 
@@ -100,15 +100,13 @@ export default function HomeExperience() {
         <div className="hero-shade" />
         <div className="hero-content shell">
           <h1>
-            <span className="line"><VariableFontHoverByLetter label="Spaces that" className="hero-word" fromFontVariationSettings="'wght' 620" toFontVariationSettings="'wght' 800" /></span>
-            <span className="line"><VariableFontHoverByLetter label="shape the way" className="hero-word" fromFontVariationSettings="'wght' 560" toFontVariationSettings="'wght' 800" staggerFrom="center" /></span>
-            <span className="line"><VariableFontHoverByLetter label="you live." className="hero-word" fromFontVariationSettings="'wght' 620" toFontVariationSettings="'wght' 800" staggerFrom="last" /></span>
+            <span className="line"><VariableFontHoverByLetter label="Spaces that" className="hero-word" fromFontVariationSettings="'wght' 700" toFontVariationSettings="'wght' 800" /></span>
+            <span className="line"><VariableFontHoverByLetter label="shape the way" className="hero-word" fromFontVariationSettings="'wght' 700" toFontVariationSettings="'wght' 800" staggerFrom="center" /></span>
+            <span className="line"><VariableFontHoverByLetter label="you live." className="hero-word" fromFontVariationSettings="'wght' 700" toFontVariationSettings="'wght' 800" staggerFrom="last" /></span>
           </h1>
           <div className="hero-intro"><p>Curated residences, thoughtful spaces and exceptional real estate across Pune.</p><div className="hero-actions"><MagneticLink href="#properties">Explore properties</MagneticLink><MagneticLink href="#contact" outline>Schedule a visit</MagneticLink></div></div>
         </div>
       </section>
-
-      <MarketMarquee />
 
       <section className="intro-section shell" id="approach">
         <div className="intro-grid">

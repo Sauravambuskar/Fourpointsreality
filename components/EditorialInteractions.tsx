@@ -1,20 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import SimpleMarquee from "@/components/fancy/blocks/simple-marquee";
 import StackingCards, { StackingCardItem } from "@/components/fancy/blocks/stacking-cards";
 import { ScrollChoreography } from "@/components/ui/scroll-choreography";
 import { ScrollSplitCard } from "@/components/ui/scroll-split-card";
 import styles from "./EditorialInteractions.module.css";
-
-const marketSignals = [
-  { place: "Baner", note: "Established west Pune living" },
-  { place: "Kalyani Nagar", note: "Prime urban residences" },
-  { place: "Koregaon Park", note: "Leafy, central and distinctive" },
-  { place: "Kharadi", note: "Connected east Pune growth" },
-  { place: "Wakad", note: "Family-led residential demand" },
-  { place: "Viman Nagar", note: "Cosmopolitan convenience" },
-];
 
 const advisoryCards = [
   {
@@ -67,43 +57,6 @@ const decisionCards = [
     textColor: "#fffdf8",
   },
 ];
-
-export function MarketMarquee() {
-  return (
-    <section className={styles.marketSection} aria-label="Pune property market highlights">
-      <div className={styles.marketHeader}>
-        <strong>Pune, read closely.</strong>
-        <p>Hover to slow. Drag to explore. Scroll to change the pace.</p>
-      </div>
-      <div className={styles.marqueeWindow}>
-        <SimpleMarquee
-          className={styles.marquee}
-          direction="left"
-          baseVelocity={4.2}
-          repeat={4}
-          slowdownOnHover
-          slowDownFactor={0.08}
-          draggable
-          dragSensitivity={0.1}
-          dragVelocityDecay={0.94}
-          dragAwareDirection
-          grabCursor
-          useScrollVelocity
-          scrollAwareDirection
-        >
-          <div className={styles.marqueeGroup}>
-            {marketSignals.map((item) => (
-              <article className={styles.marketSignal} key={item.place}>
-                <strong>{item.place}</strong>
-                <span>{item.note}</span>
-              </article>
-            ))}
-          </div>
-        </SimpleMarquee>
-      </div>
-    </section>
-  );
-}
 
 export function AdvisoryStack() {
   return (
