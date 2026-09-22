@@ -1,23 +1,8 @@
-export const services = [
-  { no: "01", title: "Buy", text: "Find a residence that feels right.", icon: "⌂" },
-  { no: "02", title: "Sell", text: "Position your property for the right opportunity.", icon: "◇" },
-  { no: "03", title: "Invest", text: "Explore opportunities built around long-term value.", icon: "↗" },
-  { no: "04", title: "Advisory", text: "Make informed property decisions with clarity.", icon: "◎" },
-];
-
 export const properties = [
   { name: "The Aria Residence", area: "Baner, Pune", kind: "Luxury Apartments", price: "₹1.85 Cr onwards", image: "/images/aria-residence.png" },
   { name: "Oakline Villas", area: "Wakad, Pune", kind: "Private Villas", price: "₹2.40 Cr onwards", image: "/images/oakline-villa.png" },
   { name: "Maison Verde", area: "Kalyani Nagar, Pune", kind: "Luxury Residences", price: "₹3.10 Cr onwards", image: "/images/material-detail.png" },
   { name: "The Terraces", area: "Kharadi, Pune", kind: "Premium Residences", price: "₹1.65 Cr onwards", image: "/images/hero-residence.png" },
-];
-
-export const architecturePanels = [
-  { word: "Form.", image: "/images/aria-residence.png", pos: "50% 42%" },
-  { word: "Light.", image: "/images/story-interior.png", pos: "50% 50%" },
-  { word: "Space.", image: "/images/hero-residence.png", pos: "60% 50%" },
-  { word: "Material.", image: "/images/material-detail.png", pos: "50% 50%" },
-  { word: "Belonging.", image: "/images/advisory-lifestyle.png", pos: "50% 50%" },
 ];
 
 export const areas = [

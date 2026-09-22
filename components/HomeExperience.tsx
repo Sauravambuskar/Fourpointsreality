@@ -7,16 +7,18 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import { FormEvent, MouseEvent as ReactMouseEvent, useEffect, useRef, useState } from "react";
-import { architecturePanels, areas, journal, properties, services, testimonials } from "./siteData";
+import VariableFontHoverByLetter from "./fancy/text/variable-font-hover-by-letter";
+import { AdvisoryStack, ArchitectureChoreography, DecisionSplit, MarketMarquee } from "./EditorialInteractions";
+import { areas, journal, properties, testimonials } from "./siteData";
+import ProjectsCylinder from "./ProjectsCylinder";
 
 const ThreeHouse = dynamic(() => import("./ThreeHouse"), { ssr: false, loading: () => <div className="three-loading">Composing the space…</div> });
 
 function Logo({ light = false, full = false }: { light?: boolean; full?: boolean }) {
   return <a href="#top" className={`logo ${light ? "light" : ""} ${full ? "logo-full" : "logo-compact"}`} aria-label="FourPoints Realty home">
-    {full ? <span className="logo-full-frame"><Image src="/images/fourpoints-logo.png" alt="" width={2172} height={724} sizes="(max-width: 767px) 88vw, 420px" unoptimized /></span> : <>
-      <span className="logo-emblem" aria-hidden="true"><Image src="/images/fourpoints-logo.png" alt="" width={2172} height={724} sizes="160px" unoptimized /></span>
-      <span className="logo-copy"><span className="logo-word"><b>Four</b><strong>Points</strong></span><small>Realty</small></span>
-    </>}
+    {full
+      ? <span className="logo-full-frame"><Image src="/images/fourpoints-logo.png" alt="" width={2172} height={724} sizes="(max-width: 767px) 88vw, 420px" unoptimized /></span>
+      : <span className="logo-header-lockup" aria-hidden="true"><Image src="/images/fourpoints-header-logo.png" alt="" width={2098} height={650} sizes="(max-width: 767px) 170px, 190px" unoptimized /></span>}
   </a>;
 }
 
@@ -37,7 +39,7 @@ function Header() {
   const links = ["Projects", "Properties", "About", "Services", "Journal", "Contact"];
   return <>
     <header className="site-header">
-      <Logo light />
+      <Logo />
       <nav className="desktop-nav" aria-label="Main navigation">{links.map((item) => <a key={item} href={`#${item.toLowerCase()}`}>{item}</a>)}</nav>
       <a className="header-cta" href="#contact">Schedule a visit <Arrow /></a>
       <button className="menu-button" onClick={() => setOpen(true)} aria-label="Open navigation"><span /><span /></button>
@@ -56,8 +58,6 @@ function Preloader() {
 
 export default function HomeExperience() {
   const root = useRef<HTMLDivElement>(null);
-  const horizontal = useRef<HTMLDivElement>(null);
-  const track = useRef<HTMLDivElement>(null);
   const [testimonial, setTestimonial] = useState(0);
   const [submitted, setSubmitted] = useState(false);
 
@@ -81,15 +81,10 @@ export default function HomeExperience() {
       gsap.to(".hero-content", { yPercent: 24, opacity: 0.25, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
       gsap.utils.toArray<HTMLElement>(".reveal").forEach((el) => gsap.from(el, { y: 60, opacity: 0, duration: 1.1, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 86%" } }));
       gsap.utils.toArray<HTMLElement>(".image-reveal").forEach((el) => gsap.from(el, { clipPath: "inset(0 0 100% 0)", duration: 1.35, ease: "power4.inOut", scrollTrigger: { trigger: el, start: "top 82%" } }));
-      gsap.from(".service-row", { y: 38, opacity: 0, stagger: 0.11, scrollTrigger: { trigger: ".services-list", start: "top 76%" } });
       gsap.utils.toArray<HTMLElement>(".stat strong").forEach((el) => {
         const end = Number(el.dataset.value || 0); const obj = { value: 0 };
         gsap.to(obj, { value: end, duration: 1.8, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 84%", once: true }, onUpdate: () => { el.textContent = Math.floor(obj.value) + (el.dataset.suffix || ""); } });
       });
-      if (horizontal.current && track.current && window.innerWidth > 767) {
-        const distance = () => track.current!.scrollWidth - window.innerWidth;
-        gsap.to(track.current, { x: () => -distance(), ease: "none", scrollTrigger: { trigger: horizontal.current, start: "top top", end: () => `+=${distance()}`, pin: true, scrub: 1, invalidateOnRefresh: true } });
-      }
       ScrollTrigger.create({ start: 60, onUpdate: (self) => document.querySelector(".site-header")?.classList.toggle("scrolled", self.scroll() > 60) });
     }, root);
     return () => { context.revert(); cancelAnimationFrame(raf); window.removeEventListener("scroll", syncHeader); lenis.destroy(); };
@@ -104,10 +99,16 @@ export default function HomeExperience() {
         <div className="hero-media"><Image src="/images/hero-residence.png" alt="Contemporary limestone residence overlooking Pune at sunset" fill priority sizes="100vw" /></div>
         <div className="hero-shade" />
         <div className="hero-content shell">
-          <h1><span className="line"><span className="hero-word">Spaces that</span></span><span className="line"><span className="hero-word italic">shape the way</span></span><span className="line"><span className="hero-word">you live.</span></span></h1>
+          <h1>
+            <span className="line"><VariableFontHoverByLetter label="Spaces that" className="hero-word" fromFontVariationSettings="'wght' 620" toFontVariationSettings="'wght' 800" /></span>
+            <span className="line"><VariableFontHoverByLetter label="shape the way" className="hero-word" fromFontVariationSettings="'wght' 560" toFontVariationSettings="'wght' 800" staggerFrom="center" /></span>
+            <span className="line"><VariableFontHoverByLetter label="you live." className="hero-word" fromFontVariationSettings="'wght' 620" toFontVariationSettings="'wght' 800" staggerFrom="last" /></span>
+          </h1>
           <div className="hero-intro"><p>Curated residences, thoughtful spaces and exceptional real estate across Pune.</p><div className="hero-actions"><MagneticLink href="#properties">Explore properties</MagneticLink><MagneticLink href="#contact" outline>Schedule a visit</MagneticLink></div></div>
         </div>
       </section>
+
+      <MarketMarquee />
 
       <section className="intro-section shell" id="approach">
         <div className="intro-grid">
@@ -116,13 +117,7 @@ export default function HomeExperience() {
         <div className="intro-media image-reveal" data-cursor="VIEW"><Image src="/images/story-interior.png" alt="Warm, contemporary residence interior with garden court" fill sizes="(max-width: 768px) 100vw, 78vw" /></div>
       </section>
 
-      <section className="services-section" id="services">
-        <div className="shell section-head reveal"><h2 className="display">Thoughtful service.<br />A clearer way <span className="heading-accent">forward.</span></h2></div>
-        <div className="services-list shell">{services.map((service) => <a href="#contact" className="service-row" key={service.no}>
-          <span className="service-icon">{service.icon}</span><h3>{service.title}</h3><p>{service.text}</p><span className="round-arrow"><Arrow /></span>
-          <span className="service-image"><Image src={service.no === "01" || service.no === "03" ? "/images/aria-residence.png" : "/images/oakline-villa.png"} alt="" fill sizes="240px" /></span>
-        </a>)}</div>
-      </section>
+      <AdvisoryStack />
 
       <section className="properties-section shell" id="properties">
         <div className="property-heading reveal"><div><h2 className="display">Selected properties<br /><span className="heading-accent">worth coming home to.</span></h2></div><p>A considered collection of residences chosen for how they feel, function and endure.</p></div>
@@ -132,22 +127,14 @@ export default function HomeExperience() {
         </article>)}</div>
       </section>
 
-      <section className="horizontal-story" ref={horizontal} id="projects">
-        <div className="horizontal-track" ref={track}>
-          <div className="horizontal-intro"><h2>Architecture in motion,<br /><span className="heading-accent">told in five parts.</span></h2><p>Scroll to explore the details that turn buildings into places of belonging.</p></div>
-          {architecturePanels.map((panel) => <article className="architecture-panel" key={panel.word} data-cursor="DRAG"><Image src={panel.image} alt={`Architectural study of ${panel.word.toLowerCase()}`} fill sizes="85vw" style={{ objectPosition: panel.pos }} /><div className="panel-shade"/><h3>{panel.word}</h3></article>)}
-        </div>
-      </section>
+      <ProjectsCylinder />
 
       <section className="experience-section">
         <div className="experience-copy shell"><div className="experience-title"><h2 className="display reveal">Move through and<br /><span className="heading-accent">experience the space.</span></h2><p className="reveal">Explore the residence to see how volume, material and landscape work together.</p></div></div>
         <div className="three-wrap"><ThreeHouse /></div>
       </section>
 
-      <section className="story-section">
-        <div className="story-image image-reveal"><Image src="/images/story-interior.png" alt="Sunset inside a warm contemporary Pune residence" fill sizes="100vw" /></div><div className="story-shade" />
-        <div className="story-copy shell"><h2>Beyond the brochure,<br /><span className="heading-accent">every property has a story.</span></h2><p>We look for the details that make an address meaningful: light at breakfast, a garden at dusk, and the way a room brings people together.</p></div>
-      </section>
+      <ArchitectureChoreography />
 
       <section className="about-section shell" id="about">
         <div className="about-grid"><div><h2 className="display reveal">FourPoints expertise.<br /><span className="heading-accent">Local knowledge and thoughtful advice.</span></h2></div><div className="about-copy reveal"><p>Based in Pune, FourPoints Realty combines local market knowledge with a modern approach to property discovery, advisory and investment.</p><p>We listen closely, research deeply and recommend only what we would stand behind ourselves.</p></div></div>
@@ -163,10 +150,7 @@ export default function HomeExperience() {
         </div>
       </section>
 
-      <section className="lifestyle-section shell">
-        <div className="lifestyle-image image-reveal" data-cursor="VIEW"><Image src="/images/advisory-lifestyle.png" alt="A couple reviewing architectural plans with a FourPoints advisor" fill sizes="100vw" /></div>
-        <div className="lifestyle-card reveal"><h2>Personal property advice<br /><span className="heading-accent">starts with listening.</span></h2><p>No two searches are the same. We begin with how you want to live, then build the right shortlist around it.</p><MagneticLink href="#contact">Our approach</MagneticLink></div>
-      </section>
+      <DecisionSplit />
 
       <section className="testimonials-section">
         <div className="shell testimonial-layout"><h2>What our<br />clients say.</h2><div className="quote-wrap">
