@@ -208,12 +208,13 @@ a:hover .arrow, button:hover .arrow { transform: translate(3px,-3px); }
   .hero { height: 100svh; min-height: 680px; }
   .hero-media img { object-position: 63% center; }
   .hero-content { padding-top: 110px; padding-bottom: 32px; }
-  .hero-content h1 { font-size: clamp(3rem, 12vw, 4.25rem); line-height: .9; }
-  .hero-content h1 .hero-word { white-space: nowrap; }
+  .hero-content h1 { width: 100%; max-width: 100%; font-size: clamp(2.15rem, 10.4vw, 4.15rem); line-height: .92; letter-spacing: -.04em; }
+  .hero-content h1 .line { width: 100%; max-width: 100%; padding-right: 0; }
+  .hero-content h1 .hero-word { width: 100%; white-space: nowrap; }
   .hero-content h1 .line:nth-child(2) { margin-left: 0; }
   .hero-intro { display: block; margin-top: 25px; }
   .hero-intro > p { font-size: .88rem; max-width: 335px; }
-  .hero-actions { margin-top: 22px; }
+  .hero-actions { flex-wrap: wrap; margin-top: 22px; }
   .button { min-height: 49px; padding: 0 14px; gap: 12px; font-size: .7rem; }
   .intro-section, .properties-section, .about-section, .journal-section, .contact-section { padding: 110px 0; }
   .intro-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 52px; }
@@ -247,6 +248,14 @@ a:hover .arrow, button:hover .arrow { transform: translate(3px,-3px); }
   .footer .logo-full { grid-column: 1 / 3; max-width: 360px; }
   .footer-address { grid-column: 1 / 3; grid-row: 2; }
   .footer-bottom { flex-direction: column; gap: 12px; margin-top: 70px; }
+}
+
+@media (max-width: 420px) {
+  .hero-content { padding-bottom: 24px; }
+  .hero-content h1 { font-size: clamp(2.1rem, 10.2vw, 2.7rem); }
+  .hero-intro > p { max-width: 310px; }
+  .hero-actions { display: grid; grid-template-columns: 1fr; width: min(100%, 330px); }
+  .hero-actions .button { width: 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
