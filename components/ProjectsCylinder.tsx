@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { ArrowIcon } from "@/components/ArrowIcon";
 import { useEffect, useRef, useState } from "react";
 import { CylinderCarousel } from "@/components/motion/cylinder-carousel";
 import styles from "./ProjectsCylinder.module.css";
@@ -98,7 +99,7 @@ export default function ProjectsCylinder() {
             <h3>{activeItem.title}</h3>
             <strong>{activeItem.location}</strong>
             <p>{activeItem.description}</p>
-            <a href="#contact">Discuss your requirement <span aria-hidden="true">↗</span></a>
+            <a href="#contact">Discuss your requirement <ArrowIcon /></a>
           </div>
         </div>
 

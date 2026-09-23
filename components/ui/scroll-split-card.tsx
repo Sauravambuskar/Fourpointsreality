@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { motion, useMotionTemplate, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
 import { useRef } from "react";
 
 interface ScrollSplitCardItem {
@@ -9,6 +10,8 @@ interface ScrollSplitCardItem {
   description: string;
   bgColor: string;
   textColor: string;
+  image?: string;
+  imageAlt?: string;
   icon?: React.ReactNode;
 }
 
@@ -82,14 +85,23 @@ export function ScrollSplitCard({
           style={{ backgroundImage: `url(${imageSrc})` }}
         />
         <div className="mx-auto mt-5 grid max-w-5xl gap-4 md:grid-cols-3">
-          {cards.slice(0, 3).map((card) => (
+          {cards.slice(0, 3).map((card, index) => (
             <article
-              className="min-h-64 rounded-2xl border border-black/10 p-8"
+              className="overflow-hidden rounded-2xl border border-black/10 p-5"
               key={card.title}
               style={{ backgroundColor: card.bgColor, color: card.textColor }}
             >
+              {card.image && (
+                <div className="relative mb-5 h-48 overflow-hidden rounded-xl border border-current/10">
+                  <Image src={card.image} alt={card.imageAlt ?? ""} fill sizes="(max-width: 767px) 100vw, 33vw" className="object-cover" />
+                </div>
+              )}
+              <div className="mb-5 flex items-center justify-between">
+                {card.icon}
+                <span className="text-xs font-bold tracking-[0.18em] opacity-55">0{index + 1}</span>
+              </div>
               <h3 className="text-2xl font-extrabold">{card.title}</h3>
-              <p className="mt-4 text-base font-semibold leading-relaxed opacity-80">{card.description}</p>
+              <p className="mt-3 text-base font-semibold leading-relaxed opacity-80">{card.description}</p>
             </article>
           ))}
         </div>
@@ -107,7 +119,7 @@ export function ScrollSplitCard({
       <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden [perspective:1200px]">
         {/* Starting Text indicator */}
         <motion.div
-          className="absolute top-[20%] left-0 right-0 text-center"
+          className="absolute top-[12%] left-0 right-0 text-center"
           style={{
             opacity: startTextOpacity,
             y: startTextY,
@@ -157,7 +169,7 @@ export function ScrollSplitCard({
               {/* Back Side: New Content Card */}
               <motion.div
                 className={cn(
-                  "absolute inset-0 overflow-hidden flex flex-col justify-end p-8 [backface-visibility:hidden] will-change-transform",
+                  "absolute inset-0 overflow-hidden flex flex-col p-5 [backface-visibility:hidden] will-change-transform",
                   "border border-white/5 bg-gradient-to-br from-white/10 to-transparent",
                   "shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),inset_0_-24px_48px_rgba(0,0,0,0.2)]"
                 )}
@@ -178,8 +190,23 @@ export function ScrollSplitCard({
                   }}
                 />
 
-                <div className="relative z-10 mb-auto">{card.icon}</div>
-                <h3 className="relative z-10 mb-4 text-2xl font-extrabold leading-tight">
+                {card.image && (
+                  <div className="relative z-10 mb-5 h-40 shrink-0 overflow-hidden rounded-xl border border-current/10">
+                    <Image
+                      src={card.image}
+                      alt={card.imageAlt ?? ""}
+                      fill
+                      sizes="(max-width: 767px) 100vw, 320px"
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/15 to-transparent" />
+                  </div>
+                )}
+                <div className="relative z-10 mb-4 flex items-center justify-between">
+                  {card.icon}
+                  <span className="text-xs font-bold tracking-[0.18em] opacity-55">0{i + 1}</span>
+                </div>
+                <h3 className="relative z-10 mb-3 text-2xl font-extrabold leading-tight">
                   {card.title}
                 </h3>
                 <p className="relative z-10 text-base font-semibold leading-relaxed opacity-80">{card.description}</p>

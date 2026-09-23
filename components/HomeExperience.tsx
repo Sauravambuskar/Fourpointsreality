@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import gsap from "gsap";
@@ -9,10 +8,9 @@ import Lenis from "lenis";
 import { FormEvent, MouseEvent as ReactMouseEvent, useEffect, useRef, useState } from "react";
 import VariableFontHoverByLetter from "./fancy/text/variable-font-hover-by-letter";
 import { AdvisoryStack, ArchitectureChoreography, DecisionSplit } from "./EditorialInteractions";
-import { areas, journal, properties, testimonials } from "./siteData";
+import { ArrowIcon } from "./ArrowIcon";
+import { journal, properties, testimonials } from "./siteData";
 import ProjectsCylinder from "./ProjectsCylinder";
-
-const ThreeHouse = dynamic(() => import("./ThreeHouse"), { ssr: false, loading: () => <div className="three-loading">Composing the space…</div> });
 
 function Logo({ light = false, full = false }: { light?: boolean; full?: boolean }) {
   return <a href="#top" className={`logo ${light ? "light" : ""} ${full ? "logo-full" : "logo-compact"}`} aria-label="FourPoints Realty home">
@@ -22,7 +20,7 @@ function Logo({ light = false, full = false }: { light?: boolean; full?: boolean
   </a>;
 }
 
-function Arrow() { return <span className="arrow" aria-hidden="true">↗</span>; }
+function Arrow() { return <ArrowIcon className="arrow" />; }
 
 function MagneticLink({ href, children, outline = false }: { href: string; children: React.ReactNode; outline?: boolean }) {
   const ref = useRef<HTMLAnchorElement>(null);
@@ -65,7 +63,13 @@ export default function HomeExperience() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) { document.querySelector(".preloader")?.remove(); return; }
     gsap.registerPlugin(ScrollTrigger);
-    const lenis = new Lenis({ duration: 1.15, smoothWheel: true });
+    const lenis = new Lenis({
+      duration: 1.35,
+      easing: (time) => Math.min(1, 1.001 - Math.pow(2, -9 * time)),
+      smoothWheel: true,
+      wheelMultiplier: 0.9,
+    });
+    lenis.on("scroll", ScrollTrigger.update);
     const header = document.querySelector(".site-header");
     const syncHeader = () => header?.classList.toggle("scrolled", window.scrollY > 60);
     syncHeader();
@@ -100,9 +104,9 @@ export default function HomeExperience() {
         <div className="hero-shade" />
         <div className="hero-content shell">
           <h1>
-            <span className="line"><VariableFontHoverByLetter label="Spaces that" className="hero-word" fromFontVariationSettings="'wght' 700" toFontVariationSettings="'wght' 800" /></span>
-            <span className="line"><VariableFontHoverByLetter label="shape the way" className="hero-word" fromFontVariationSettings="'wght' 700" toFontVariationSettings="'wght' 800" staggerFrom="center" /></span>
-            <span className="line"><VariableFontHoverByLetter label="you live." className="hero-word" fromFontVariationSettings="'wght' 700" toFontVariationSettings="'wght' 800" staggerFrom="last" /></span>
+            <span className="line"><VariableFontHoverByLetter label="Spaces that" className="hero-word" fromFontVariationSettings="'wght' 760" toFontVariationSettings="'wght' 900" /></span>
+            <span className="line"><VariableFontHoverByLetter label="shape the way" className="hero-word" fromFontVariationSettings="'wght' 760" toFontVariationSettings="'wght' 900" staggerFrom="center" /></span>
+            <span className="line"><VariableFontHoverByLetter label="you live." className="hero-word" fromFontVariationSettings="'wght' 760" toFontVariationSettings="'wght' 900" staggerFrom="last" /></span>
           </h1>
           <div className="hero-intro"><p>Curated residences, thoughtful spaces and exceptional real estate across Pune.</p><div className="hero-actions"><MagneticLink href="#properties">Explore properties</MagneticLink><MagneticLink href="#contact" outline>Schedule a visit</MagneticLink></div></div>
         </div>
@@ -127,25 +131,11 @@ export default function HomeExperience() {
 
       <ProjectsCylinder />
 
-      <section className="experience-section">
-        <div className="experience-copy shell"><div className="experience-title"><h2 className="display reveal">Move through and<br /><span className="heading-accent">experience the space.</span></h2><p className="reveal">Explore the residence to see how volume, material and landscape work together.</p></div></div>
-        <div className="three-wrap"><ThreeHouse /></div>
-      </section>
-
       <ArchitectureChoreography />
 
       <section className="about-section shell" id="about">
         <div className="about-grid"><div><h2 className="display reveal">FourPoints expertise.<br /><span className="heading-accent">Local knowledge and thoughtful advice.</span></h2></div><div className="about-copy reveal"><p>Based in Pune, FourPoints Realty combines local market knowledge with a modern approach to property discovery, advisory and investment.</p><p>We listen closely, research deeply and recommend only what we would stand behind ourselves.</p></div></div>
         <div className="stats">{[[12,"+","Years of experience"],[250,"+","Properties"],[18,"","Pune micro-markets"],[96,"%","Client referrals"]].map(([value,suffix,label]) => <div className="stat" key={String(label)}><strong data-value={value} data-suffix={suffix}>{value}{suffix}</strong><span>{label}</span></div>)}</div>
-      </section>
-
-      <section className="pune-section">
-        <div className="shell pune-head"><h2 className="display reveal">The city we know.<br /><span className="heading-accent">Rooted in Pune.</span></h2><p className="reveal">Eight neighbourhoods, each with its own rhythm, character and opportunity.</p></div>
-        <div className="map shell reveal">
-          <svg viewBox="0 0 1000 500" aria-hidden="true"><path d="M50 185 C180 60 280 120 385 210 S580 390 705 220 900 110 960 270"/><path d="M70 340 C220 410 320 260 460 300 S660 460 920 350"/><path d="M185 55 C260 190 455 55 555 170 S750 315 920 75"/></svg>
-          {areas.map((area) => <button className="map-point" key={area.name} style={{ left: `${area.x}%`, top: `${area.y}%` }}><i /><span className="point-name">{area.name}</span><span className="point-card"><strong>{area.name}</strong><small>{area.note}</small><b>{area.type}</b><span className="point-price">{area.price}</span></span></button>)}
-          <small className="map-note">Indicative demo data · not to scale</small>
-        </div>
       </section>
 
       <DecisionSplit />
@@ -166,6 +156,6 @@ export default function HomeExperience() {
 
       <section className="final-cta"><div className="final-orbit" aria-hidden="true"><span /><span /><i /></div><div className="shell"><h2>Let’s find<br /><span className="heading-accent">your place.</span></h2><MagneticLink href="#contact" outline>Schedule a private consultation</MagneticLink></div></section>
     </main>
-    <footer className="footer"><div className="shell"><div className="footer-top"><Logo full /><div className="footer-address"><p>Pune, Maharashtra, India</p><a href="mailto:hello@fourpointsrealty.example">hello@fourpointsrealty.example</a><a href="tel:+919000000000">+91 90000 00000</a></div><div className="footer-links"><a href="#projects">Projects</a><a href="#properties">Properties</a><a href="#about">About</a><a href="#services">Services</a><a href="#journal">Journal</a><a href="#contact">Contact</a></div><div className="footer-social"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">YouTube</a></div></div><div className="footer-bottom"><span>© 2026 FourPoints Realty</span><span>Thoughtful spaces. Considered living.</span><span>Demo website</span></div></div></footer>
+    <footer className="footer"><div className="shell"><div className="footer-top"><Logo full /><div className="footer-address"><p>Pune, Maharashtra, India</p><a href="mailto:hello@fourpointsrealty.example">hello@fourpointsrealty.example</a><a href="tel:+919000000000">+91 90000 00000</a></div><div className="footer-links"><a href="#projects">Projects</a><a href="#properties">Properties</a><a href="#about">About</a><a href="#services">Services</a><a href="#journal">Journal</a><a href="#contact">Contact</a></div><div className="footer-social"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">YouTube</a></div></div><div className="footer-bottom"><span>© 2026 FourPoints Realty</span><span>Thoughtful spaces. Considered living.</span></div></div></footer>
   </div>;
 }
