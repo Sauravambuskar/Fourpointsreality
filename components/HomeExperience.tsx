@@ -60,8 +60,14 @@ export default function HomeExperience() {
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
+    if ("scrollRestoration" in window.history) window.history.scrollRestoration = "manual";
+    window.scrollTo(0, 0);
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) { document.querySelector(".preloader")?.remove(); return; }
+    if (reduce) {
+      document.documentElement.classList.remove("is-loading");
+      document.querySelector(".preloader")?.remove();
+      return;
+    }
     gsap.registerPlugin(ScrollTrigger);
     const lenis = new Lenis({
       duration: 1.35,
@@ -70,6 +76,7 @@ export default function HomeExperience() {
       wheelMultiplier: 0.9,
     });
     lenis.on("scroll", ScrollTrigger.update);
+    lenis.scrollTo(0, { immediate: true, force: true });
     const header = document.querySelector(".site-header");
     const syncHeader = () => header?.classList.toggle("scrolled", window.scrollY > 60);
     syncHeader();
@@ -80,7 +87,7 @@ export default function HomeExperience() {
 
     const context = gsap.context(() => {
       const load = gsap.timeline({ defaults: { ease: "power3.out" } });
-      load.to(".load-line i", { scaleX: 1, duration: 0.9 }).to(".preloader-brand", { y: -12, opacity: 0, duration: 0.55 }, ">-.12").to(".preloader", { yPercent: -100, duration: 0.85, ease: "power4.inOut" }).from(".hero-media", { scale: 1.18, duration: 1.4 }, "-=.55").from(".hero-word", { yPercent: 115, rotate: 3, stagger: 0.08, duration: 1 }, "-=1").from(".hero-intro > *", { y: 22, opacity: 0, stagger: 0.08, duration: 0.7 }, "-=.7");
+      load.to(".load-line i", { scaleX: 1, duration: 0.9 }).to(".preloader-brand", { y: -12, opacity: 0, duration: 0.55 }, ">-.12").to(".preloader", { yPercent: -100, duration: 0.85, ease: "power4.inOut", onComplete: () => { lenis.scrollTo(0, { immediate: true, force: true }); document.documentElement.classList.remove("is-loading"); } }).from(".hero-media", { scale: 1.18, duration: 1.4 }, "-=.55").from(".hero-word", { yPercent: 115, rotate: 3, stagger: 0.08, duration: 1 }, "-=1").from(".hero-intro > *", { y: 22, opacity: 0, stagger: 0.08, duration: 0.7 }, "-=.7");
       gsap.to(".hero-media img", { yPercent: 10, scale: 1.06, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
       gsap.to(".hero-content", { yPercent: 24, opacity: 0.25, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
       gsap.utils.toArray<HTMLElement>(".reveal").forEach((el) => gsap.from(el, { y: 60, opacity: 0, duration: 1.1, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 86%" } }));
@@ -91,7 +98,7 @@ export default function HomeExperience() {
       });
       ScrollTrigger.create({ start: 60, onUpdate: (self) => document.querySelector(".site-header")?.classList.toggle("scrolled", self.scroll() > 60) });
     }, root);
-    return () => { context.revert(); cancelAnimationFrame(raf); window.removeEventListener("scroll", syncHeader); lenis.destroy(); };
+    return () => { context.revert(); cancelAnimationFrame(raf); window.removeEventListener("scroll", syncHeader); document.documentElement.classList.remove("is-loading"); lenis.destroy(); };
   }, []);
 
   const submit = (event: FormEvent) => { event.preventDefault(); setSubmitted(true); };
